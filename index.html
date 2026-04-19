@@ -1,96 +1,73 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Casino Nay</title>
-  <link rel="stylesheet" href="./style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casino</title>
+<link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-<div class="container">
 
-  <!-- LOGIN -->
-  <div id="login">
-    <h2>Iniciar sesión</h2>
-    <input id="username" placeholder="Usuario">
-    <input id="password" type="password" placeholder="Contraseña">
-    <button id="btnLogin">Entrar</button>
-    <p id="error"></p>
+<!-- LOGIN -->
+<div id="login" class="container">
+  <h2>🎰 Iniciar sesión</h2>
+
+  <input id="username" placeholder="Usuario" autocomplete="username">
+  <input id="password" type="password" placeholder="Clave" autocomplete="current-password">
+
+  <button type="button" onclick="login()">Entrar</button>
+  <p id="error"></p>
+</div>
+
+<!-- JUEGO -->
+<div id="game" class="container" style="display:none">
+
+<h1>🎰 CASINO 🎰</h1>
+
+<div class="stats">
+  💰 <span id="coins">0</span>
+  ⭐ <span id="points">0</span>
+  💵 <span id="quetzales">0</span>
+</div>
+
+<!-- SLOT -->
+<div class="machine">
+  <div class="column">
+    <div class="cell" id="c1r1"></div>
+    <div class="cell middle" id="c1r2"></div>
+    <div class="cell" id="c1r3"></div>
   </div>
 
-  <!-- JUEGO -->
-  <div id="game" style="display:none;">
-
-    <h2>🎰 Tragaperras</h2>
-
-    <div class="stats">
-      <span>💰 <span id="coins">0</span></span>
-      <span>Puntos: <span id="points">0</span></span>
-      <span>Q: <span id="quetzales">0</span></span>
-    </div>
-
-    <!-- TRAGAPERRAS ORIGINAL -->
-    <div class="machine">
-      <div class="column">
-        <div class="cell" id="c1r1">❓</div>
-        <div class="cell middle" id="c1r2">❓</div>
-        <div class="cell" id="c1r3">❓</div>
-      </div>
-
-      <div class="column">
-        <div class="cell" id="c2r1">❓</div>
-        <div class="cell middle" id="c2r2">❓</div>
-        <div class="cell" id="c2r3">❓</div>
-      </div>
-
-      <div class="column">
-        <div class="cell" id="c3r1">❓</div>
-        <div class="cell middle" id="c3r2">❓</div>
-        <div class="cell" id="c3r3">❓</div>
-      </div>
-    </div>
-
-    <button id="spinBtn">Girar (100 monedas)</button>
-    <button id="convertBtn">Canjear puntos → Q</button>
-
-    <!-- WHATSAPP -->
-    <a href="https://w.app/hxpfqw" target="_blank" class="wa-btn">
-      Obtener 200 monedas (audio)
-    </a>
-    <input id="key200" placeholder="Clave 200">
-    <button id="btn200">Canjear 200</button>
-
-    <a href="https://w.app/ruqepz" target="_blank" class="wa-btn">
-      Obtener 500 monedas (selfie)
-    </a>
-    <input id="key500" placeholder="Clave 500">
-    <button id="btn500">Canjear 500</button>
-
+  <div class="column">
+    <div class="cell" id="c2r1"></div>
+    <div class="cell middle" id="c2r2"></div>
+    <div class="cell" id="c2r3"></div>
   </div>
+
+  <div class="column">
+    <div class="cell" id="c3r1"></div>
+    <div class="cell middle" id="c3r2"></div>
+    <div class="cell" id="c3r3"></div>
+  </div>
+</div>
+
+<button type="button" onclick="spin()">🎲 GIRAR (100)</button>
+<button type="button" onclick="convertPoints()">💱 Canjear puntos</button>
+
+<hr>
+
+<h3>📸 500 monedas</h3>
+<a class="wa-btn" href="https://wa.me/573026782036?text=Te%20envio%20mi%20selfie%20para%20500%20monedas">Enviar selfie</a>
+<input id="key500" placeholder="Clave 500">
+<button type="button" onclick="redeem('key500','K500',500)">Canjear 500</button>
+
+<h3>🎤 200 monedas</h3>
+<a class="wa-btn" href="https://wa.me/573026782036?text=Te%20envio%20mi%20audio%20para%20200%20monedas">Enviar audio</a>
+<input id="key200" placeholder="Clave 200">
+<button type="button" onclick="redeem('key200','K200',200)">Canjear 200</button>
 
 </div>
 
-<!-- 🔥 FIREBASE (IMPORTANTE: antes del script.js) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
-
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyBsysEW0W0Rbf014EUzxZ_r7-ZFd4vkxFg",
-  authDomain: "casino-nay.firebaseapp.com",
-  databaseURL: "https://casino-nay-default-rtdb.firebaseio.com",
-  projectId: "casino-nay",
-  storageBucket: "casino-nay.firebasestorage.app",
-  messagingSenderId: "628126908991",
-  appId: "1:628126908991:web:df56b2901ef3ac5756ae8a"
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-</script>
-
-<script src="./script.js"></script>
-
+<script src="script.js"></script>
 </body>
 </html>
