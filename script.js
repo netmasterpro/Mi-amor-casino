@@ -6,166 +6,173 @@ const USERS = {
   "Prueba": "12345"
 };
 
-const symbols = ["❤️","⭐","🍒","💎","🔥","N","A","Y"];
-
 const KEY_200 = "K200";
 const KEY_500 = "K500";
 
-/* 🔥 ESPERAR A QUE CARGUE TODO */
-window.onload = () => {
+const symbols = ["❤️","⭐","🌙","🍒","💎","🍀","🔥","N","A","Y"];
 
-  document.getElementById("btnLogin").onclick = login;
-  document.getElementById("spinBtn").onclick = spin;
-  document.getElementById("convertBtn").onclick = convertPoints;
-  document.getElementById("btn200").onclick = redeem200;
-  document.getElementById("btn500").onclick = redeem500;
-
-};
-
-/* LOGIN (ARREGLADO) */
+/* ================= LOGIN ================= */
 function login(){
-
   const u = document.getElementById("username").value.trim();
   const p = document.getElementById("password").value.trim();
+  const error = document.getElementById("error");
 
   if(!USERS[u] || USERS[u] !== p){
-    document.getElementById("error").innerText="Datos incorrectos";
+    error.innerText = "❌ Datos incorrectos";
     return;
   }
 
   user = u;
+  let data = getData();
 
-  const ref = db.ref("users/"+user);
+  if(!data){
+    data = {
+      coins: u === "Prueba" ? 200000 : 2000,
+      points: 0,
+      quetzales: 0,
+      jackpot: false,
+      lastOnline: Date.now()
+    };
+    saveData(data);
+  }
 
-  ref.once("value").then(snap=>{
-    if(!snap.exists()){
-      ref.set({
-        coins: user==="Prueba"?1000000:2000,
-        points:0,
-        quetzales:0,
-        jackpot:false
-      });
-    }
-  });
+  document.getElementById("login").style.display = "none";
+  document.getElementById("game").style.display = "block";
 
-  document.getElementById("login").style.display="none";
-  document.getElementById("game").style.display="block";
-
-  /* 🔥 SINCRONIZACIÓN REAL */
-  ref.on("value", snap=>{
-    const d = snap.val();
-    if(!d) return;
-
-    document.getElementById("coins").innerText = d.coins;
-    document.getElementById("points").innerText = d.points;
-    document.getElementById("quetzales").innerText = d.quetzales;
-  });
+  applyOfflineCoins();
+  load();
 }
 
-/* 🎰 GIRAR (SIN BUG DE MONEDAS) */
+/* ================= STORAGE ================= */
+function getData(){
+  return JSON.parse(localStorage.getItem(user));
+}
+
+function saveData(data){
+  localStorage.setItem(user, JSON.stringify(data));
+}
+
+/* ================= OFFLINE COINS ================= */
+function applyOfflineCoins(){
+  let d = getData();
+  if(!d) return;
+
+  let now = Date.now();
+  let diff = now - d.lastOnline;
+
+  let mins = Math.floor(diff / 60000);
+  let earned = Math.floor(mins / 30) * 100;
+
+  d.coins += earned;
+  d.lastOnline = now;
+
+  saveData(d);
+}
+
+/* ================= SLOT ================= */
 function spin(){
+  let d = getData();
+  if(!d || d.coins < 100){
+    alert("❌ Sin monedas");
+    return;
+  }
 
-  const ref = db.ref("users/"+user);
+  d.coins -= 100;
 
-  ref.once("value").then(snap=>{
-    let d = snap.val();
+  spinCol("c1");
+  spinCol("c2");
+  spinCol("c3");
 
-    if(d.coins < 100){
-      alert("Sin monedas");
-      return;
+  setTimeout(()=>{
+
+    let m1 = document.getElementById("c1r2").innerText;
+    let m2 = document.getElementById("c2r2").innerText;
+    let m3 = document.getElementById("c3r2").innerText;
+
+    if(m1==="N" && m2==="A" && m3==="Y" && !d.jackpot){
+      d.jackpot = true;
+      d.points += 2000;
+      alert("🎉 PREMIO MAYOR NAY 🎉");
+    }
+    else if(m1===m2 && m2===m3){
+      d.points += 200;
+    }
+    else if(m1===m2 || m2===m3){
+      d.points += 50;
     }
 
-    d.coins -= 100;
+    saveData(d);
+    load();
 
-    spinAnim();
-
-    setTimeout(()=>{
-
-      const m1 = document.getElementById("c1r2").innerText;
-      const m2 = document.getElementById("c2r2").innerText;
-      const m3 = document.getElementById("c3r2").innerText;
-
-      if(m1==="N" && m2==="A" && m3==="Y" && !d.jackpot){
-        d.points += 2000;
-        d.jackpot = true;
-        alert("PREMIO MAYOR");
-      }
-      else if(m1===m2 && m2===m3){
-        d.points += 200;
-      }
-      else if(m1===m2 || m2===m3){
-        d.points += 50;
-      }
-
-      ref.set(d);
-
-    },800);
-  });
+  },1000);
 }
 
-/* 🎰 ANIMACIÓN (MISMO ESTILO TUYO) */
-function spinAnim(){
+function spinCol(prefix){
+  const ids = ["r1","r2","r3"];
+  let count = 0;
 
-  ["c1","c2","c3"].forEach(c=>{
-    ["r1","r2","r3"].forEach(r=>{
-      document.getElementById(c+r).innerText =
+  let interval = setInterval(()=>{
+    ids.forEach(id=>{
+      document.getElementById(prefix+id).innerText =
         symbols[Math.floor(Math.random()*symbols.length)];
     });
-  });
 
+    count++;
+    if(count > 8) clearInterval(interval);
+
+  },100);
 }
 
-/* 💱 CANJEAR */
+/* ================= POINTS ================= */
 function convertPoints(){
-
-  const ref = db.ref("users/"+user);
-
-  ref.once("value").then(snap=>{
-    let d = snap.val();
-
-    if(d.points < 1000){
-      alert("Mínimo 1000 puntos");
-      return;
-    }
-
-    const ganados = Math.floor(d.points / 1000);
-
-    d.points = d.points % 1000;
-    d.quetzales += ganados;
-
-    ref.set(d);
-  });
-}
-
-/* 🔑 CLAVES */
-function redeem200(){
-
-  const key = document.getElementById("key200").value;
-
-  if(key !== KEY_200){
-    alert("Clave incorrecta");
+  let d = getData();
+  if(!d || d.points < 1000){
+    alert("❌ Necesitas 1000 puntos");
     return;
   }
 
-  const ref = db.ref("users/"+user+"/coins");
+  let q = Math.floor(d.points / 1000);
 
-  ref.once("value").then(snap=>{
-    ref.set(snap.val() + 200);
-  });
+  d.points = d.points % 1000;
+  d.quetzales += q;
+
+  saveData(d);
+  load();
 }
 
-function redeem500(){
+/* ================= REDEEM ================= */
+function redeem(inputId, key, amount){
+  const input = document.getElementById(inputId).value.trim();
 
-  const key = document.getElementById("key500").value;
-
-  if(key !== KEY_500){
-    alert("Clave incorrecta");
+  if(input !== key){
+    alert("❌ Clave incorrecta");
     return;
   }
 
-  const ref = db.ref("users/"+user+"/coins");
+  let used = JSON.parse(localStorage.getItem("used") || "[]");
+  if(used.includes(input)){
+    alert("⚠️ Ya usada");
+    return;
+  }
 
-  ref.once("value").then(snap=>{
-    ref.set(snap.val() + 500);
-  });
+  let d = getData();
+  if(!d) return;
+
+  d.coins += amount;
+  used.push(input);
+
+  saveData(d);
+  localStorage.setItem("used", JSON.stringify(used));
+
+  load();
+}
+
+/* ================= LOAD ================= */
+function load(){
+  let d = getData();
+  if(!d) return;
+
+  document.getElementById("coins").innerText = d.coins;
+  document.getElementById("points").innerText = d.points;
+  document.getElementById("quetzales").innerText = d.quetzales;
 }
