@@ -16,6 +16,29 @@ body{
   margin-top:20px;
 }
 
+/* LOGIN */
+.profiles{
+  display:flex;
+  justify-content:space-around;
+  margin:15px 0;
+}
+
+.profile{
+  background:#222;
+  padding:10px;
+  border-radius:10px;
+  cursor:pointer;
+  width:90px;
+  transition:0.2s;
+}
+
+.profile:hover{
+  background:gold;
+  color:black;
+  transform:scale(1.05);
+}
+
+/* INPUTS */
 input, button{
   width:90%;
   padding:12px;
@@ -36,12 +59,14 @@ button:active{
   transform:scale(0.95);
 }
 
+/* STATS */
 .stats{
   display:flex;
   justify-content:space-around;
   margin-bottom:15px;
 }
 
+/* SLOT */
 .machine{
   display:flex;
   justify-content:center;
@@ -75,6 +100,7 @@ button:active{
   box-shadow: 0 0 12px red;
 }
 
+/* WHATSAPP */
 .wa-btn{
   display:block;
   width:90%;
