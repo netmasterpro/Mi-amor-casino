@@ -2,31 +2,66 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>🎰 Casino del Amor</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casino Nay</title>
+
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <div class="casino">
+<!-- LOGIN -->
+<div id="login">
+  <h2>Iniciar sesión</h2>
+  <input id="username" placeholder="Usuario">
+  <input id="password" type="password" placeholder="Contraseña">
+  <button onclick="login()">Entrar</button>
+  <p id="error"></p>
+</div>
 
-    <h1 class="title">🎰 CASINO DEL AMOR 🎰</h1>
+<!-- JUEGO -->
+<div id="game" style="display:none;">
 
-    <div class="saldo">
-      💰 Monedas: <span id="coins">1000</span>
-    </div>
+  <h2>🎰 Tragaperras</h2>
 
-    <div class="machine">
-      <div class="reel" id="r1"></div>
-      <div class="reel" id="r2"></div>
-      <div class="reel" id="r3"></div>
-    </div>
+  <p>💰 Monedas: <span id="coins">0</span></p>
+  <p>⭐ Puntos: <span id="points">0</span></p>
+  <p>💵 Quetzales: <span id="quetzales">0</span></p>
 
-    <button id="spinBtn" onclick="spin()">GIRAR (100)</button>
-
-    <p id="resultado"></p>
-
+  <!-- SLOT -->
+  <div class="slot">
+    <div id="c1r2">❓</div>
+    <div id="c2r2">❓</div>
+    <div id="c3r2">❓</div>
   </div>
 
-  <script src="script.js"></script>
+  <button onclick="spin()">Girar (100 monedas)</button>
+
+  <button onclick="convertPoints()">Cambiar puntos → quetzales</button>
+
+</div>
+
+<!-- 🔥 FIREBASE (ESTO ES LO IMPORTANTE) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBsysEW0W0Rbf014EUzxZ_r7-ZFd4vkxFg",
+  authDomain: "casino-nay.firebaseapp.com",
+  databaseURL: "https://casino-nay-default-rtdb.firebaseio.com",
+  projectId: "casino-nay",
+  storageBucket: "casino-nay.firebasestorage.app",
+  messagingSenderId: "628126908991",
+  appId: "1:628126908991:web:df56b2901ef3ac5756ae8a"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+</script>
+
+<!-- TU SCRIPT -->
+<script src="script.js"></script>
+
 </body>
 </html>
