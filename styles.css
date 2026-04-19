@@ -1,30 +1,78 @@
 body{
   margin:0;
-  background:#000;
+  background: radial-gradient(circle, #111, #000);
   color:white;
   font-family:Arial;
 }
 
 .container{
-  max-width:400px;
+  max-width:420px;
   margin:auto;
   padding:15px;
   text-align:center;
+  background: rgba(255,255,255,0.05);
+  border-radius:15px;
+  box-shadow: 0 0 20px rgba(255,215,0,0.15);
+  margin-top:20px;
 }
 
 input, button{
   width:90%;
   padding:12px;
-  margin:5px 0;
+  margin:6px 0;
   font-size:16px;
   border-radius:8px;
 }
 
 button{
-  background:gold;
+  background: linear-gradient(45deg, gold, orange);
   border:none;
-  color:black;
   font-weight:bold;
+  box-shadow: 0 0 10px gold;
+  transition:0.2s;
+}
+
+button:active{
+  transform:scale(0.95);
+}
+
+.stats{
+  display:flex;
+  justify-content:space-around;
+  margin-bottom:15px;
+}
+
+.machine{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  padding:12px;
+  background:#111;
+  border-radius:15px;
+  box-shadow: inset 0 0 10px #000;
+}
+
+.column{
+  display:flex;
+  flex-direction:column;
+}
+
+.cell{
+  width:60px;
+  height:60px;
+  border:2px solid gold;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+  background:#000;
+  border-radius:8px;
+  box-shadow: 0 0 8px rgba(255,215,0,0.25);
+}
+
+.middle{
+  border:3px solid red;
+  box-shadow: 0 0 12px red;
 }
 
 .wa-btn{
@@ -37,51 +85,4 @@ button{
   text-decoration:none;
   border-radius:8px;
   font-weight:bold;
-}
-
-.stats{
-  display:flex;
-  justify-content:space-around;
-  margin-bottom:10px;
-}
-
-/* TRAGAPERRAS */
-.machine{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin:20px 0;
-}
-
-.column{
-  display:flex;
-  flex-direction:column;
-  gap:5px;
-}
-
-.cell{
-  width:60px;
-  height:60px;
-  border:2px solid gold;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:25px;
-  background:#111;
-  border-radius:6px;
-}
-
-/* FILA GANADORA */
-.middle{
-  border:3px solid red;
-  background:#222;
-}
-
-/* RESPONSIVE */
-@media (max-width:400px){
-  .cell{
-    width:55px;
-    height:55px;
-    font-size:22px;
-  }
 }
