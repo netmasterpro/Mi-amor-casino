@@ -8,14 +8,20 @@
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- LOGIN TIPO NETFLIX -->
 <div id="login" class="container">
-  <h2>🎰 Iniciar sesión</h2>
 
-  <input id="username" placeholder="Usuario" autocomplete="username">
-  <input id="password" type="password" placeholder="Clave" autocomplete="current-password">
+  <h2>🎮 Selecciona tu perfil</h2>
 
-  <button type="button" onclick="login()">Entrar</button>
+  <div class="profiles">
+    <div class="profile" onclick="selectUser('Cristian')">👤 Cristian</div>
+    <div class="profile" onclick="selectUser('Nayeli')">👤 Nayeli</div>
+    <div class="profile" onclick="selectUser('Prueba')">👤 Prueba</div>
+  </div>
+
+  <input id="password" type="password" placeholder="Contraseña">
+  <button onclick="login()">Entrar</button>
+
   <p id="error"></p>
 </div>
 
@@ -51,20 +57,20 @@
   </div>
 </div>
 
-<button type="button" onclick="spin()">🎲 GIRAR (100)</button>
-<button type="button" onclick="convertPoints()">💱 Canjear puntos</button>
+<button onclick="spin()">🎲 GIRAR (100)</button>
+<button onclick="convertPoints()">💱 Canjear puntos</button>
 
 <hr>
 
 <h3>📸 500 monedas</h3>
 <a class="wa-btn" href="https://wa.me/573026782036?text=Te%20envio%20mi%20selfie%20para%20500%20monedas">Enviar selfie</a>
 <input id="key500" placeholder="Clave 500">
-<button type="button" onclick="redeem('key500','K500',500)">Canjear 500</button>
+<button onclick="redeem('key500','K500',500)">Canjear 500</button>
 
 <h3>🎤 200 monedas</h3>
 <a class="wa-btn" href="https://wa.me/573026782036?text=Te%20envio%20mi%20audio%20para%20200%20monedas">Enviar audio</a>
 <input id="key200" placeholder="Clave 200">
-<button type="button" onclick="redeem('key200','K200',200)">Canjear 200</button>
+<button onclick="redeem('key200','K200',200)">Canjear 200</button>
 
 </div>
 
