@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Casino Nay</title>
-<link rel="stylesheet" href="style.css">
+
+<!-- CSS -->
+<link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
@@ -16,7 +18,7 @@
   <h2>Iniciar sesión</h2>
   <input id="username" placeholder="Usuario">
   <input id="password" type="password" placeholder="Contraseña">
-  <button onclick="login()">Entrar</button>
+  <button id="btnLogin">Entrar</button>
   <p id="error"></p>
 </div>
 
@@ -31,7 +33,6 @@
     <span>Q: <span id="quetzales">0</span></span>
   </div>
 
-  <!-- MAQUINA -->
   <div class="machine">
     <div class="column">
       <div class="cell" id="c1r1"></div>
@@ -52,21 +53,21 @@
     </div>
   </div>
 
-  <button onclick="spin()">Girar (100)</button>
-  <button onclick="convertPoints()">Canjear puntos</button>
+  <button id="spinBtn">Girar (100)</button>
+  <button id="convertBtn">Canjear puntos</button>
 
   <!-- WHATSAPP -->
   <a href="https://w.app/hxpfqw" target="_blank" class="wa-btn">
     Obtener 200 monedas (audio)
   </a>
   <input id="key200" placeholder="Clave 200">
-  <button onclick="redeem200()">Canjear 200</button>
+  <button id="btn200">Canjear 200</button>
 
   <a href="https://w.app/ruqepz" target="_blank" class="wa-btn">
     Obtener 500 monedas (selfie)
   </a>
   <input id="key500" placeholder="Clave 500">
-  <button onclick="redeem500()">Canjear 500</button>
+  <button id="btn500">Canjear 500</button>
 
 </div>
 
@@ -91,7 +92,8 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 </script>
 
-<script src="script.js"></script>
+<!-- JS -->
+<script src="./script.js"></script>
 
 </body>
 </html>
