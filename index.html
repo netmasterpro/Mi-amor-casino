@@ -11,18 +11,37 @@
 <!-- LOGIN TIPO NETFLIX -->
 <div id="login" class="container">
 
-  <h2>🎮 Selecciona tu perfil</h2>
+  <h2>🎮 Elige tu perfil</h2>
 
-  <div class="profiles">
-    <div class="profile" onclick="selectUser('Cristian')">👤 Cristian</div>
-    <div class="profile" onclick="selectUser('Nayeli')">👤 Nayeli</div>
-    <div class="profile" onclick="selectUser('Prueba')">👤 Prueba</div>
+  <div class="profile-grid">
+
+    <div class="profile-card" onclick="selectUser('Cristian', event)">
+      <div class="avatar">👤</div>
+      <div class="name">Cristian</div>
+    </div>
+
+    <div class="profile-card" onclick="selectUser('Nayeli', event)">
+      <div class="avatar">👤</div>
+      <div class="name">Nayeli</div>
+    </div>
+
+    <div class="profile-card" onclick="selectUser('Prueba', event)">
+      <div class="avatar">👤</div>
+      <div class="name">Prueba</div>
+    </div>
+
   </div>
 
-  <input id="password" type="password" placeholder="Contraseña">
+  <div id="selectedUser" class="selected-user">
+    Ningún perfil seleccionado
+  </div>
+
+  <input id="password" type="password" placeholder="Ingresa contraseña">
+
   <button onclick="login()">Entrar</button>
 
   <p id="error"></p>
+
 </div>
 
 <!-- JUEGO -->
