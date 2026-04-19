@@ -1,79 +1,77 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Casino Nay</title>
-
-<!-- CSS -->
-<link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casino Nay</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-
 <div class="container">
 
-<!-- LOGIN -->
-<div id="login">
-  <h2>Iniciar sesión</h2>
-  <input id="username" placeholder="Usuario">
-  <input id="password" type="password" placeholder="Contraseña">
-  <button id="btnLogin">Entrar</button>
-  <p id="error"></p>
-</div>
-
-<!-- JUEGO -->
-<div id="game" style="display:none;">
-
-  <h2>🎰 Tragaperras</h2>
-
-  <div class="stats">
-    <span>💰 <span id="coins">0</span></span>
-    <span>Puntos: <span id="points">0</span></span>
-    <span>Q: <span id="quetzales">0</span></span>
+  <!-- LOGIN -->
+  <div id="login">
+    <h2>Iniciar sesión</h2>
+    <input id="username" placeholder="Usuario">
+    <input id="password" type="password" placeholder="Contraseña">
+    <button id="btnLogin">Entrar</button>
+    <p id="error"></p>
   </div>
 
-  <div class="machine">
-    <div class="column">
-      <div class="cell" id="c1r1"></div>
-      <div class="cell middle" id="c1r2"></div>
-      <div class="cell" id="c1r3"></div>
+  <!-- JUEGO -->
+  <div id="game" style="display:none;">
+
+    <h2>🎰 Tragaperras</h2>
+
+    <div class="stats">
+      <span>💰 <span id="coins">0</span></span>
+      <span>Puntos: <span id="points">0</span></span>
+      <span>Q: <span id="quetzales">0</span></span>
     </div>
 
-    <div class="column">
-      <div class="cell" id="c2r1"></div>
-      <div class="cell middle" id="c2r2"></div>
-      <div class="cell" id="c2r3"></div>
+    <!-- TRAGAPERRAS ORIGINAL -->
+    <div class="machine">
+      <div class="column">
+        <div class="cell" id="c1r1">❓</div>
+        <div class="cell middle" id="c1r2">❓</div>
+        <div class="cell" id="c1r3">❓</div>
+      </div>
+
+      <div class="column">
+        <div class="cell" id="c2r1">❓</div>
+        <div class="cell middle" id="c2r2">❓</div>
+        <div class="cell" id="c2r3">❓</div>
+      </div>
+
+      <div class="column">
+        <div class="cell" id="c3r1">❓</div>
+        <div class="cell middle" id="c3r2">❓</div>
+        <div class="cell" id="c3r3">❓</div>
+      </div>
     </div>
 
-    <div class="column">
-      <div class="cell" id="c3r1"></div>
-      <div class="cell middle" id="c3r2"></div>
-      <div class="cell" id="c3r3"></div>
-    </div>
+    <button id="spinBtn">Girar (100 monedas)</button>
+    <button id="convertBtn">Canjear puntos → Q</button>
+
+    <!-- WHATSAPP -->
+    <a href="https://w.app/hxpfqw" target="_blank" class="wa-btn">
+      Obtener 200 monedas (audio)
+    </a>
+    <input id="key200" placeholder="Clave 200">
+    <button id="btn200">Canjear 200</button>
+
+    <a href="https://w.app/ruqepz" target="_blank" class="wa-btn">
+      Obtener 500 monedas (selfie)
+    </a>
+    <input id="key500" placeholder="Clave 500">
+    <button id="btn500">Canjear 500</button>
+
   </div>
 
-  <button id="spinBtn">Girar (100)</button>
-  <button id="convertBtn">Canjear puntos</button>
-
-  <!-- WHATSAPP -->
-  <a href="https://w.app/hxpfqw" target="_blank" class="wa-btn">
-    Obtener 200 monedas (audio)
-  </a>
-  <input id="key200" placeholder="Clave 200">
-  <button id="btn200">Canjear 200</button>
-
-  <a href="https://w.app/ruqepz" target="_blank" class="wa-btn">
-    Obtener 500 monedas (selfie)
-  </a>
-  <input id="key500" placeholder="Clave 500">
-  <button id="btn500">Canjear 500</button>
-
 </div>
 
-</div>
-
-<!-- 🔥 FIREBASE -->
+<!-- 🔥 FIREBASE (IMPORTANTE: antes del script.js) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 
@@ -92,7 +90,6 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 </script>
 
-<!-- JS -->
 <script src="./script.js"></script>
 
 </body>
