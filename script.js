@@ -8,13 +8,25 @@ const USERS = {
 
 const symbols = ["❤️","⭐","🌙","🍒","💎","🍀","🔥","N","A","Y"];
 
-function selectUser(name){
+/* ================= SELECT PROFILE ================= */
+function selectUser(name, event){
+
   user = name;
-  document.getElementById("error").innerText = "✔ Perfil seleccionado: " + name;
+
+  document.querySelectorAll(".profile-card")
+    .forEach(el => el.classList.remove("active"));
+
+  event.currentTarget.classList.add("active");
+
+  document.getElementById("selectedUser").innerText =
+    "✔ Perfil seleccionado: " + name;
+
+  document.getElementById("error").innerText = "";
 }
 
-/* LOGIN */
+/* ================= LOGIN ================= */
 function login(){
+
   const pass = document.getElementById("password").value.trim();
   const error = document.getElementById("error");
 
@@ -28,7 +40,7 @@ function login(){
     return;
   }
 
-  let data = getData();
+  let data = JSON.parse(localStorage.getItem(user));
 
   if(!data){
     data = {
@@ -38,17 +50,21 @@ function login(){
       jackpot: false,
       lastOnline: Date.now()
     };
-    saveData(data);
+    localStorage.setItem(user, JSON.stringify(data));
   }
 
-  document.getElementById("login").style.display = "none";
-  document.getElementById("game").style.display = "block";
+  document.getElementById("login").style.opacity = "0";
+
+  setTimeout(()=>{
+    document.getElementById("login").style.display = "none";
+    document.getElementById("game").style.display = "block";
+  },300);
 
   applyOfflineCoins();
   load();
 }
 
-/* STORAGE */
+/* ================= STORAGE ================= */
 function getData(){
   return JSON.parse(localStorage.getItem(user));
 }
@@ -57,7 +73,7 @@ function saveData(data){
   localStorage.setItem(user, JSON.stringify(data));
 }
 
-/* OFFLINE COINS */
+/* ================= OFFLINE ================= */
 function applyOfflineCoins(){
   let d = getData();
   if(!d) return;
@@ -73,7 +89,7 @@ function applyOfflineCoins(){
   saveData(d);
 }
 
-/* SLOT */
+/* ================= SLOT ================= */
 function spin(){
   let d = getData();
   if(!d || d.coins < 100){
@@ -128,7 +144,7 @@ function spinCol(prefix){
   },100);
 }
 
-/* POINTS */
+/* ================= POINTS ================= */
 function convertPoints(){
   let d = getData();
   if(!d || d.points < 1000){
@@ -145,7 +161,7 @@ function convertPoints(){
   load();
 }
 
-/* REDEEM */
+/* ================= REDEEM ================= */
 function redeem(inputId, key, amount){
   const input = document.getElementById(inputId).value.trim();
 
@@ -172,7 +188,7 @@ function redeem(inputId, key, amount){
   load();
 }
 
-/* LOAD UI */
+/* ================= LOAD ================= */
 function load(){
   let d = getData();
   if(!d) return;
