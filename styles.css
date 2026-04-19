@@ -1,70 +1,100 @@
-body {
-  margin: 0;
-  background: radial-gradient(circle, #1a1a1a, #000);
-  color: white;
-  font-family: Arial;
-  text-align: center;
+/* RESET */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
 }
 
-.title {
-  color: gold;
-  text-shadow: 0 0 10px gold;
+/* BODY */
+body{
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:white;
+  text-align:center;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-.casino {
-  margin-top: 50px;
+/* CONTENEDORES */
+#login, #game{
+  width:90%;
+  max-width:400px;
+  background:rgba(0,0,0,0.6);
+  padding:20px;
+  border-radius:20px;
+  box-shadow:0 0 20px rgba(0,0,0,0.5);
 }
 
-.saldo {
-  font-size: 22px;
-  margin: 20px;
+/* INPUTS */
+input{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border:none;
+  border-radius:10px;
+  outline:none;
+  font-size:16px;
 }
 
-.machine {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin: 30px;
+/* BOTONES */
+button{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border:none;
+  border-radius:12px;
+  background:#00c3ff;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
 }
 
-.reel {
-  width: 100px;
-  height: 100px;
-  background: #111;
-  border: 3px solid gold;
-  border-radius: 15px;
-  font-size: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 20px gold inset;
+button:hover{
+  background:#0099cc;
+  transform:scale(1.03);
 }
 
-button {
-  padding: 15px 40px;
-  font-size: 20px;
-  background: linear-gradient(45deg, gold, orange);
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
+/* SLOT */
+.slot{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin:20px 0;
 }
 
-button:active {
-  transform: scale(0.95);
+/* CASILLAS */
+.slot div{
+  width:70px;
+  height:70px;
+  background:white;
+  color:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:30px;
+  border-radius:12px;
+  box-shadow:0 0 10px rgba(0,0,0,0.5);
 }
 
-#resultado {
-  margin-top: 20px;
-  font-size: 20px;
+/* TEXTOS */
+h2{
+  margin-bottom:10px;
 }
 
-.spinning {
-  animation: spin 0.1s linear infinite;
+p{
+  margin:5px 0;
+  font-size:16px;
 }
 
-@keyframes spin {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(10px); }
-  100% { transform: translateY(0px); }
+/* RESPONSIVE EXTRA */
+@media (max-width:400px){
+  .slot div{
+    width:60px;
+    height:60px;
+    font-size:25px;
+  }
 }
