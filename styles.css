@@ -17,12 +17,14 @@ input, button{
   padding:12px;
   margin:5px 0;
   font-size:16px;
+  border-radius:8px;
 }
 
 button{
   background:gold;
   border:none;
-  border-radius:8px;
+  color:black;
+  font-weight:bold;
 }
 
 .wa-btn{
@@ -40,17 +42,21 @@ button{
 .stats{
   display:flex;
   justify-content:space-around;
+  margin-bottom:10px;
 }
 
+/* TRAGAPERRAS */
 .machine{
   display:flex;
   justify-content:center;
   gap:10px;
+  margin:20px 0;
 }
 
 .column{
   display:flex;
   flex-direction:column;
+  gap:5px;
 }
 
 .cell{
@@ -61,8 +67,21 @@ button{
   align-items:center;
   justify-content:center;
   font-size:25px;
+  background:#111;
+  border-radius:6px;
 }
 
+/* FILA GANADORA */
 .middle{
   border:3px solid red;
+  background:#222;
+}
+
+/* RESPONSIVE */
+@media (max-width:400px){
+  .cell{
+    width:55px;
+    height:55px;
+    font-size:22px;
+  }
 }
