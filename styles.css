@@ -5,6 +5,7 @@ body{
   font-family:Arial;
 }
 
+/* CONTAINER */
 .container{
   max-width:420px;
   margin:auto;
@@ -16,26 +17,48 @@ body{
   margin-top:20px;
 }
 
-/* LOGIN */
-.profiles{
+/* LOGIN GRID */
+.profile-grid{
   display:flex;
   justify-content:space-around;
+  gap:10px;
   margin:15px 0;
 }
 
-.profile{
-  background:#222;
-  padding:10px;
-  border-radius:10px;
-  cursor:pointer;
+.profile-card{
   width:90px;
+  padding:12px;
+  background:#1c1c1c;
+  border-radius:12px;
+  cursor:pointer;
   transition:0.2s;
+  border:2px solid transparent;
 }
 
-.profile:hover{
-  background:gold;
-  color:black;
+.profile-card:hover{
   transform:scale(1.05);
+  border:2px solid gold;
+  box-shadow:0 0 10px gold;
+}
+
+.profile-card.active{
+  border:2px solid #25D366;
+  box-shadow:0 0 12px #25D366;
+}
+
+.avatar{
+  font-size:30px;
+}
+
+.name{
+  font-size:12px;
+  margin-top:5px;
+}
+
+.selected-user{
+  margin:10px 0;
+  font-size:14px;
+  color:gold;
 }
 
 /* INPUTS */
