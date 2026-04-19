@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Casino Nay</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casino Nay</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
+<div class="container">
 
 <!-- LOGIN -->
 <div id="login">
@@ -20,39 +22,53 @@
 
 <!-- JUEGO -->
 <div id="game" style="display:none;">
+
   <h2>🎰 Tragaperras</h2>
 
-  <p>💰 Monedas: <span id="coins">0</span></p>
-  <p>Puntos: <span id="points">0</span></p>
-  <p>Quetzales: <span id="quetzales">0</span></p>
-
-  <div class="slot">
-    <div id="c1">❓</div>
-    <div id="c2">❓</div>
-    <div id="c3">❓</div>
+  <div class="stats">
+    <span>💰 <span id="coins">0</span></span>
+    <span>Puntos: <span id="points">0</span></span>
+    <span>Q: <span id="quetzales">0</span></span>
   </div>
 
-  <button onclick="spin()">Girar (100 monedas)</button>
-  <button onclick="convertPoints()">Cambiar puntos → quetzales</button>
+  <!-- MAQUINA -->
+  <div class="machine">
+    <div class="column">
+      <div class="cell" id="c1r1"></div>
+      <div class="cell middle" id="c1r2"></div>
+      <div class="cell" id="c1r3"></div>
+    </div>
 
-  <hr>
+    <div class="column">
+      <div class="cell" id="c2r1"></div>
+      <div class="cell middle" id="c2r2"></div>
+      <div class="cell" id="c2r3"></div>
+    </div>
 
-  <!-- BOTONES WHATSAPP -->
-  <a href="https://w.app/hxpfqw" target="_blank">
-    <button>Obtener 200 monedas (enviar audio)</button>
+    <div class="column">
+      <div class="cell" id="c3r1"></div>
+      <div class="cell middle" id="c3r2"></div>
+      <div class="cell" id="c3r3"></div>
+    </div>
+  </div>
+
+  <button onclick="spin()">Girar (100)</button>
+  <button onclick="convertPoints()">Canjear puntos</button>
+
+  <!-- WHATSAPP -->
+  <a href="https://w.app/hxpfqw" target="_blank" class="wa-btn">
+    Obtener 200 monedas (audio)
   </a>
-
   <input id="key200" placeholder="Clave 200">
   <button onclick="redeem200()">Canjear 200</button>
 
-  <br><br>
-
-  <a href="https://w.app/ruqepz" target="_blank">
-    <button>Obtener 500 monedas (enviar selfie)</button>
+  <a href="https://w.app/ruqepz" target="_blank" class="wa-btn">
+    Obtener 500 monedas (selfie)
   </a>
-
   <input id="key500" placeholder="Clave 500">
   <button onclick="redeem500()">Canjear 500</button>
+
+</div>
 
 </div>
 
