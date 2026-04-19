@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Casino Nay</title>
-
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -21,27 +20,43 @@
 
 <!-- JUEGO -->
 <div id="game" style="display:none;">
-
   <h2>🎰 Tragaperras</h2>
 
   <p>💰 Monedas: <span id="coins">0</span></p>
-  <p>⭐ Puntos: <span id="points">0</span></p>
-  <p>💵 Quetzales: <span id="quetzales">0</span></p>
+  <p>Puntos: <span id="points">0</span></p>
+  <p>Quetzales: <span id="quetzales">0</span></p>
 
-  <!-- SLOT -->
   <div class="slot">
-    <div id="c1r2">❓</div>
-    <div id="c2r2">❓</div>
-    <div id="c3r2">❓</div>
+    <div id="c1">❓</div>
+    <div id="c2">❓</div>
+    <div id="c3">❓</div>
   </div>
 
   <button onclick="spin()">Girar (100 monedas)</button>
-
   <button onclick="convertPoints()">Cambiar puntos → quetzales</button>
+
+  <hr>
+
+  <!-- BOTONES WHATSAPP -->
+  <a href="https://w.app/hxpfqw" target="_blank">
+    <button>Obtener 200 monedas (enviar audio)</button>
+  </a>
+
+  <input id="key200" placeholder="Clave 200">
+  <button onclick="redeem200()">Canjear 200</button>
+
+  <br><br>
+
+  <a href="https://w.app/ruqepz" target="_blank">
+    <button>Obtener 500 monedas (enviar selfie)</button>
+  </a>
+
+  <input id="key500" placeholder="Clave 500">
+  <button onclick="redeem500()">Canjear 500</button>
 
 </div>
 
-<!-- 🔥 FIREBASE (ESTO ES LO IMPORTANTE) -->
+<!-- 🔥 FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 
@@ -60,7 +75,6 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 </script>
 
-<!-- TU SCRIPT -->
 <script src="script.js"></script>
 
 </body>
