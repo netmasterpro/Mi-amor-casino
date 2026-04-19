@@ -11,17 +11,22 @@ const symbols = ["❤️","⭐","🍒","💎","🔥","N","A","Y"];
 const KEY_200 = "K200";
 const KEY_500 = "K500";
 
-/* BOTONES */
-document.getElementById("btnLogin").onclick = login;
-document.getElementById("spinBtn").onclick = spin;
-document.getElementById("convertBtn").onclick = convertPoints;
-document.getElementById("btn200").onclick = redeem200;
-document.getElementById("btn500").onclick = redeem500;
+/* 🔥 ESPERAR A QUE CARGUE TODO */
+window.onload = () => {
 
-/* LOGIN */
+  document.getElementById("btnLogin").onclick = login;
+  document.getElementById("spinBtn").onclick = spin;
+  document.getElementById("convertBtn").onclick = convertPoints;
+  document.getElementById("btn200").onclick = redeem200;
+  document.getElementById("btn500").onclick = redeem500;
+
+};
+
+/* LOGIN (ARREGLADO) */
 function login(){
-  let u = document.getElementById("username").value.trim();
-  let p = document.getElementById("password").value.trim();
+
+  const u = document.getElementById("username").value.trim();
+  const p = document.getElementById("password").value.trim();
 
   if(!USERS[u] || USERS[u] !== p){
     document.getElementById("error").innerText="Datos incorrectos";
@@ -30,10 +35,10 @@ function login(){
 
   user = u;
 
-  let ref = db.ref("users/"+user);
+  const ref = db.ref("users/"+user);
 
-  ref.once("value").then(s=>{
-    if(!s.exists()){
+  ref.once("value").then(snap=>{
+    if(!snap.exists()){
       ref.set({
         coins: user==="Prueba"?1000000:2000,
         points:0,
@@ -46,101 +51,121 @@ function login(){
   document.getElementById("login").style.display="none";
   document.getElementById("game").style.display="block";
 
-  ref.on("value",snap=>{
-    let d=snap.val();
-    coins.innerText=d.coins;
-    points.innerText=d.points;
-    quetzales.innerText=d.quetzales;
+  /* 🔥 SINCRONIZACIÓN REAL */
+  ref.on("value", snap=>{
+    const d = snap.val();
+    if(!d) return;
+
+    document.getElementById("coins").innerText = d.coins;
+    document.getElementById("points").innerText = d.points;
+    document.getElementById("quetzales").innerText = d.quetzales;
   });
 }
 
-/* SLOT */
+/* 🎰 GIRAR (SIN BUG DE MONEDAS) */
 function spin(){
-  let ref=db.ref("users/"+user);
 
-  ref.once("value").then(s=>{
-    let d=s.val();
+  const ref = db.ref("users/"+user);
 
-    if(d.coins<100) return alert("Sin monedas");
+  ref.once("value").then(snap=>{
+    let d = snap.val();
 
-    d.coins-=100;
+    if(d.coins < 100){
+      alert("Sin monedas");
+      return;
+    }
+
+    d.coins -= 100;
 
     spinAnim();
 
     setTimeout(()=>{
-      let m1=c1r2.innerText;
-      let m2=c2r2.innerText;
-      let m3=c3r2.innerText;
+
+      const m1 = document.getElementById("c1r2").innerText;
+      const m2 = document.getElementById("c2r2").innerText;
+      const m3 = document.getElementById("c3r2").innerText;
 
       if(m1==="N" && m2==="A" && m3==="Y" && !d.jackpot){
-        d.points+=2000;
-        d.jackpot=true;
+        d.points += 2000;
+        d.jackpot = true;
         alert("PREMIO MAYOR");
       }
       else if(m1===m2 && m2===m3){
-        d.points+=200;
+        d.points += 200;
       }
       else if(m1===m2 || m2===m3){
-        d.points+=50;
+        d.points += 50;
       }
 
       ref.set(d);
 
-    },1000);
+    },800);
   });
 }
 
-/* ANIMACIÓN */
+/* 🎰 ANIMACIÓN (MISMO ESTILO TUYO) */
 function spinAnim(){
+
   ["c1","c2","c3"].forEach(c=>{
     ["r1","r2","r3"].forEach(r=>{
       document.getElementById(c+r).innerText =
         symbols[Math.floor(Math.random()*symbols.length)];
     });
   });
+
 }
 
-/* CANJEAR */
+/* 💱 CANJEAR */
 function convertPoints(){
-  let ref=db.ref("users/"+user);
 
-  ref.once("value").then(s=>{
-    let d=s.val();
+  const ref = db.ref("users/"+user);
 
-    if(d.points<1000) return alert("Mínimo 1000");
+  ref.once("value").then(snap=>{
+    let d = snap.val();
 
-    let g=Math.floor(d.points/1000);
+    if(d.points < 1000){
+      alert("Mínimo 1000 puntos");
+      return;
+    }
 
-    d.points%=1000;
-    d.quetzales+=g;
+    const ganados = Math.floor(d.points / 1000);
+
+    d.points = d.points % 1000;
+    d.quetzales += ganados;
 
     ref.set(d);
   });
 }
 
-/* CLAVES */
+/* 🔑 CLAVES */
 function redeem200(){
-  if(document.getElementById("key200").value!==KEY_200){
+
+  const key = document.getElementById("key200").value;
+
+  if(key !== KEY_200){
     alert("Clave incorrecta");
     return;
   }
 
-  let ref=db.ref("users/"+user+"/coins");
+  const ref = db.ref("users/"+user+"/coins");
 
-  ref.once("value").then(s=>{
-    ref.set(s.val()+200);
+  ref.once("value").then(snap=>{
+    ref.set(snap.val() + 200);
   });
 }
 
 function redeem500(){
-  if(document.getElementById("key500").value!==KEY_500){
+
+  const key = document.getElementById("key500").value;
+
+  if(key !== KEY_500){
     alert("Clave incorrecta");
     return;
   }
 
-  let ref=db.ref("users/"+user+"/coins");
+  const ref = db.ref("users/"+user+"/coins");
 
-  ref.once("value").then(s=>{
-    ref.set(s.val()+500);
+  ref.once("value").then(snap=>{
+    ref.set(snap.val() + 500);
   });
 }
