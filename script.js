@@ -6,18 +6,25 @@ const USERS = {
   "Prueba": "12345"
 };
 
+const symbols = ["❤️","⭐","🍒","💎","🔥","N","A","Y"];
+
 const KEY_200 = "K200";
 const KEY_500 = "K500";
 
-const symbols = ["❤️","⭐","🍒","💎","🔥","N","A","Y"];
+/* BOTONES */
+document.getElementById("btnLogin").onclick = login;
+document.getElementById("spinBtn").onclick = spin;
+document.getElementById("convertBtn").onclick = convertPoints;
+document.getElementById("btn200").onclick = redeem200;
+document.getElementById("btn500").onclick = redeem500;
 
 /* LOGIN */
 function login(){
-  let u = username.value.trim();
-  let p = password.value.trim();
+  let u = document.getElementById("username").value.trim();
+  let p = document.getElementById("password").value.trim();
 
   if(!USERS[u] || USERS[u] !== p){
-    error.innerText="Error";
+    document.getElementById("error").innerText="Datos incorrectos";
     return;
   }
 
@@ -36,8 +43,8 @@ function login(){
     }
   });
 
-  login.style.display="none";
-  game.style.display="block";
+  document.getElementById("login").style.display="none";
+  document.getElementById("game").style.display="block";
 
   ref.on("value",snap=>{
     let d=snap.val();
@@ -85,9 +92,7 @@ function spin(){
 
 /* ANIMACIÓN */
 function spinAnim(){
-  let ids=["c1","c2","c3"];
-
-  ids.forEach((c,i)=>{
+  ["c1","c2","c3"].forEach(c=>{
     ["r1","r2","r3"].forEach(r=>{
       document.getElementById(c+r).innerText =
         symbols[Math.floor(Math.random()*symbols.length)];
@@ -102,7 +107,7 @@ function convertPoints(){
   ref.once("value").then(s=>{
     let d=s.val();
 
-    if(d.points<1000) return;
+    if(d.points<1000) return alert("Mínimo 1000");
 
     let g=Math.floor(d.points/1000);
 
@@ -115,18 +120,26 @@ function convertPoints(){
 
 /* CLAVES */
 function redeem200(){
-  if(key200.value!==KEY_200) return;
+  if(document.getElementById("key200").value!==KEY_200){
+    alert("Clave incorrecta");
+    return;
+  }
 
   let ref=db.ref("users/"+user+"/coins");
+
   ref.once("value").then(s=>{
     ref.set(s.val()+200);
   });
 }
 
 function redeem500(){
-  if(key500.value!==KEY_500) return;
+  if(document.getElementById("key500").value!==KEY_500){
+    alert("Clave incorrecta");
+    return;
+  }
 
   let ref=db.ref("users/"+user+"/coins");
+
   ref.once("value").then(s=>{
     ref.set(s.val()+500);
   });
