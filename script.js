@@ -9,24 +9,26 @@ const USERS = {
 const KEY_200 = "K200";
 const KEY_500 = "K500";
 
+const symbols = ["❤️","⭐","🍒","💎","🔥","N","A","Y"];
+
 /* LOGIN */
 function login(){
-  const u = document.getElementById("username").value.trim();
-  const p = document.getElementById("password").value.trim();
+  let u = username.value.trim();
+  let p = password.value.trim();
 
   if(!USERS[u] || USERS[u] !== p){
-    document.getElementById("error").innerText="Datos incorrectos";
+    error.innerText="Error";
     return;
   }
 
   user = u;
 
-  const ref = db.ref("users/"+user);
+  let ref = db.ref("users/"+user);
 
-  ref.once("value").then(snap=>{
-    if(!snap.exists()){
+  ref.once("value").then(s=>{
+    if(!s.exists()){
       ref.set({
-        coins: user==="Prueba"?2000000:2000,
+        coins: user==="Prueba"?1000000:2000,
         points:0,
         quetzales:0,
         jackpot:false
@@ -34,78 +36,75 @@ function login(){
     }
   });
 
-  document.getElementById("login").style.display="none";
-  document.getElementById("game").style.display="block";
+  login.style.display="none";
+  game.style.display="block";
 
-  listen();
-}
-
-/* TIEMPO REAL */
-function listen(){
-  const ref = db.ref("users/"+user);
-
-  ref.on("value", snap=>{
-    const d = snap.val();
-
-    document.getElementById("coins").innerText=d.coins;
-    document.getElementById("points").innerText=d.points;
-    document.getElementById("quetzales").innerText=d.quetzales;
+  ref.on("value",snap=>{
+    let d=snap.val();
+    coins.innerText=d.coins;
+    points.innerText=d.points;
+    quetzales.innerText=d.quetzales;
   });
 }
 
 /* SLOT */
-const symbols = ["❤️","⭐","🍒","💎","🔥","N","A","Y"];
-
 function spin(){
-  const ref = db.ref("users/"+user);
+  let ref=db.ref("users/"+user);
 
-  ref.once("value").then(snap=>{
-    let d = snap.val();
+  ref.once("value").then(s=>{
+    let d=s.val();
 
-    if(d.coins<100){
-      alert("Sin monedas");
-      return;
-    }
+    if(d.coins<100) return alert("Sin monedas");
 
     d.coins-=100;
 
-    let m1 = symbols[Math.floor(Math.random()*symbols.length)];
-    let m2 = symbols[Math.floor(Math.random()*symbols.length)];
-    let m3 = symbols[Math.floor(Math.random()*symbols.length)];
+    spinAnim();
 
-    document.getElementById("c1").innerText=m1;
-    document.getElementById("c2").innerText=m2;
-    document.getElementById("c3").innerText=m3;
+    setTimeout(()=>{
+      let m1=c1r2.innerText;
+      let m2=c2r2.innerText;
+      let m3=c3r2.innerText;
 
-    if(m1==="N" && m2==="A" && m3==="Y" && !d.jackpot){
-      d.points+=2000;
-      d.jackpot=true;
-      alert("PREMIO MAYOR");
-    }
-    else if(m1===m2 && m2===m3){
-      d.points+=200;
-    }
-    else if(m1===m2 || m2===m3){
-      d.points+=50;
-    }
+      if(m1==="N" && m2==="A" && m3==="Y" && !d.jackpot){
+        d.points+=2000;
+        d.jackpot=true;
+        alert("PREMIO MAYOR");
+      }
+      else if(m1===m2 && m2===m3){
+        d.points+=200;
+      }
+      else if(m1===m2 || m2===m3){
+        d.points+=50;
+      }
 
-    ref.set(d);
+      ref.set(d);
+
+    },1000);
+  });
+}
+
+/* ANIMACIÓN */
+function spinAnim(){
+  let ids=["c1","c2","c3"];
+
+  ids.forEach((c,i)=>{
+    ["r1","r2","r3"].forEach(r=>{
+      document.getElementById(c+r).innerText =
+        symbols[Math.floor(Math.random()*symbols.length)];
+    });
   });
 }
 
 /* CANJEAR */
 function convertPoints(){
-  const ref = db.ref("users/"+user);
+  let ref=db.ref("users/"+user);
 
-  ref.once("value").then(snap=>{
-    let d = snap.val();
+  ref.once("value").then(s=>{
+    let d=s.val();
 
-    if(d.points<1000){
-      alert("mínimo 1000 puntos");
-      return;
-    }
+    if(d.points<1000) return;
 
-    let g = Math.floor(d.points/1000);
+    let g=Math.floor(d.points/1000);
 
     d.points%=1000;
     d.quetzales+=g;
@@ -116,27 +115,19 @@ function convertPoints(){
 
 /* CLAVES */
 function redeem200(){
-  if(document.getElementById("key200").value!==KEY_200){
-    alert("clave incorrecta");
-    return;
-  }
+  if(key200.value!==KEY_200) return;
 
-  db.ref("users/"+user+"/coins").once("value").then(s=>{
-    db.ref("users/"+user).update({
-      coins:s.val()+200
-    });
+  let ref=db.ref("users/"+user+"/coins");
+  ref.once("value").then(s=>{
+    ref.set(s.val()+200);
   });
 }
 
 function redeem500(){
-  if(document.getElementById("key500").value!==KEY_500){
-    alert("clave incorrecta");
-    return;
-  }
+  if(key500.value!==KEY_500) return;
 
-  db.ref("users/"+user+"/coins").once("value").then(s=>{
-    db.ref("users/"+user).update({
-      coins:s.val()+500
-    });
+  let ref=db.ref("users/"+user+"/coins");
+  ref.once("value").then(s=>{
+    ref.set(s.val()+500);
   });
 }
